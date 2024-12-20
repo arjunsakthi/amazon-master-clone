@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-String uri = dotenv.env['URI'] as String;
+String uri = 'https://amazon-master-clone-node.onrender.com';
 
 class GlobalVariables {
   // COLORS

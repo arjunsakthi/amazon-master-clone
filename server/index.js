@@ -12,6 +12,14 @@ console.log("Hello World");
 const Port = 3000;
 const app = express();
 const DB = process.env.DATABASE_URI;
+
+// for checking purpose
+app.post("/hello-world", async (req, res) => {
+  console.log(req.body);
+  console.log(req.headers);
+  res.json({ message: "All Good" });
+});
+
 //middleware
 app.use(cors());
 app.use(express.json()); // parse incoming json request

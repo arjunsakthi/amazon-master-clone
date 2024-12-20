@@ -54,11 +54,11 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     print(Provider.of<UserProvider>(context).user.token);
-    // return const AdminScreen();
-    return Provider.of<UserProvider>(context).user.token.isNotEmpty
-        ? Provider.of<UserProvider>(context).user.type == 'user'
-            ? const BottomBar()
-            : const AdminScreen()
-        : const AuthScreen();
+    return const BottomBar();
+    // return Provider.of<UserProvider>(context).user.token.isNotEmpty
+    //     ? Provider.of<UserProvider>(context).user.type == 'user'
+    //         ? const BottomBar()
+    //         : const AdminScreen()
+    //     : const AuthScreen();
   }
 }

@@ -83,6 +83,7 @@ class AuthService {
             );
           });
     } catch (e) {
+      print('error$e');
       showSnackBar(context, e.toString());
     }
   }
@@ -93,23 +94,24 @@ class AuthService {
       String? token = prefs.getString('X-auth-token');
       if (token == null) {
         prefs.setString('X-auth-token', '');
-      }
-      var tokenRes = await http
-          .post(Uri.parse('$uri/tokenIsValid'), headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'X-auth-token': token!,
-      });
-      var response = jsonDecode(tokenRes.body);
-      if (response) {
-        // get user Data
-        http.Response userRes =
-            await http.get(Uri.parse('$uri/'), headers: <String, String>{
+      } else {
+        var tokenRes = await http
+            .post(Uri.parse('$uri/tokenIsValid'), headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'X-auth-token': token,
         });
+        var response = jsonDecode(tokenRes.body);
+        if (response) {
+          // get user Data
+          http.Response userRes =
+              await http.get(Uri.parse('$uri/'), headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'X-auth-token': token,
+          });
 
-        var userProvider = Provider.of<UserProvider>(context, listen: false);
-        userProvider.setUser(userRes.body);
+          var userProvider = Provider.of<UserProvider>(context, listen: false);
+          userProvider.setUser(userRes.body);
+        }
       }
     } catch (e) {
       print("error in getuserData$e");
