@@ -1,4 +1,5 @@
 //Imp
+require("dotenv").config();
 const express = require("express");
 const authRouter = require("./routes/auth");
 const mongoose = require("mongoose");
@@ -10,8 +11,7 @@ const userRouter = require("./routes/user");
 console.log("Hello World");
 const Port = 3000;
 const app = express();
-const DB =
-  "mongodb+srv://Admin:Test123@cluster0.8awr2.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const DB = process.env.DATABASE_URI;
 //middleware
 app.use(cors());
 app.use(express.json()); // parse incoming json request
@@ -29,6 +29,6 @@ mongoose
     console.log(e);
   });
 
-app.listen(Port, "0.0.0.0", () => {
+app.listen(process.env.PORT || Port, "0.0.0.0", () => {
   console.log(`connected at port ${Port}`);
 });

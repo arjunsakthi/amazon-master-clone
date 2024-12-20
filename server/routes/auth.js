@@ -54,7 +54,7 @@ authRouter.post("/api/signin", async (req, res) => {
     if (!isMatch) {
       return res.status(400).json({ msg: "incorrect password" });
     }
-    const token = jwt.sign({ id: user._id }, "passwordKey");
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECERET_KEY);
     res.json({ token, ...user._doc }); // object destructuring like in dart
   } catch (e) {
     res.status(500).json({ error: e.message });
@@ -67,7 +67,7 @@ authRouter.post("/tokenIsValid", async (req, res) => {
     const token = req.header("X-auth-token");
 
     if (!token) return res.json(false);
-    const isVerifyed = jwt.verify(token, "passwordKey");
+    const isVerifyed = jwt.verify(token, process.env.JWT_SECERET_KEY);
     if (!isVerifyed) return res.json(false);
 
     const user = await User.findById(isVerifyed.id);
