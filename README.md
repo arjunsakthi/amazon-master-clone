@@ -3,9 +3,9 @@ Certainly! Here's the README file with proper formatting, bold text, and image u
 ---
 
 # **Full-Stack Amazon-Clone App**
-
-![Flutter + Node.js](git_images/screenshot7.png)
-
+<p align="center">
+<img src="git_images/screenshot7.png" alt="App Screenshot 1" style="width: 300px; height: 200px; object-fit: cover;">
+</p>
 This is a **full-stack e-commerce application** built to replicate the core features of Amazon, developed using **Flutter** for the frontend and **Node.js** for the backend. The app allows users to browse products, manage their cart, place orders, and make payments securely. It also includes an **admin dashboard** to manage product listings, orders, and track profits.
 
 ---
@@ -109,21 +109,27 @@ Before you can run this project locally, you need to have the following installe
 
 Here are some images from the app:
 
-![App Screenshot 1](git_images/screenshot1.jpg)  
-![App Screenshot 1](git_images/screenshot2.jpg)  
-![App Screenshot 1](git_images/screenshot3.jpg)  
-![App Screenshot 1](git_images/screenshot4.jpg)  
-![App Screenshot 1](git_images/screenshot5.jpg)  
-![App Screenshot 1](git_images/screenshot6.jpg)  
-
+<div style="display: flex; overflow-x: auto; gap: 10px;">
+  <img src="git_images/screenshot1.jpg" alt="App Screenshot 1" style="width: 200px; height: 350px; object-fit: cover;">
+  <img src="git_images/screenshot2.jpg" alt="App Screenshot 2" style="width: 200px; height: 350px; object-fit: cover;">
+  <img src="git_images/screenshot3.jpg" alt="App Screenshot 3" style="width: 200px; height: 350px; object-fit: cover;">
+  <img src="git_images/screenshot4.jpg" alt="App Screenshot 4" style="width: 200px; height: 350px; object-fit: cover;">
+  <img src="git_images/screenshot5.jpg" alt="App Screenshot 5" style="width: 200px; height: 350px; object-fit: cover;">
+  <img src="git_images/screenshot6.jpg" alt="App Screenshot 6" style="width: 200px; height: 350px; object-fit: cover;">
+  <!-- Add more images as needed -->
+</div>
 
 
 ---
 
 ## **Showcase: SVG Class Diagram**
 
-![SVG Class Diagram](git_images/class-diagram.svg)  
-*Class diagram illustrating the architecture and relationships within the Flutter app.*
+<p align="center">
+  <img src="git_images/class-diagram.svg" alt="SVG Class Diagram style="width: 400px; height: 350x; object-fit: cover;" />
+</p>
+<p align="center">
+  Class diagram illustrating the architecture and relationships within the Flutter app.
+</p>
 
 ---
 
