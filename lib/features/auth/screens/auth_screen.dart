@@ -27,6 +27,8 @@ class _AuthScreenState extends State<AuthScreen> {
       TextEditingController(text: '@gmail.com');
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
+  bool _signInValidated = false;
+  bool _signUpValidated = false;
 
   @override
   void dispose() {
@@ -37,8 +39,8 @@ class _AuthScreenState extends State<AuthScreen> {
     super.dispose();
   }
 
-  void signupUser() {
-    authService.signUpUser(
+  Future<void> signupUser() async {
+    await authService.signUpUser(
       email: _emailController.text,
       password: _passwordController.text,
       context: context,
@@ -46,15 +48,13 @@ class _AuthScreenState extends State<AuthScreen> {
     );
   }
 
-  void signInUser() {
-    authService.signInUser(
+  Future<void> signInUser() async {
+    await authService.signInUser(
       email: _emailController.text,
       password: _passwordController.text,
       context: context,
     );
   }
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -117,11 +117,19 @@ class _AuthScreenState extends State<AuthScreen> {
                       ),
                       const SizedBox(height: 10),
                       CustomButton(
-                          ontap: () {
-                            if (_signUpFormKey.currentState!.validate()) {
-                              signupUser();
-                            }
-                          },
+                          ontap: !_signInValidated
+                              ? () async {
+                                  if (_signUpFormKey.currentState!.validate()) {
+                                    setState(() {
+                                      _signInValidated = true;
+                                    });
+                                    await signupUser();
+                                    setState(() {
+                                      _signInValidated = false;
+                                    });
+                                  }
+                                }
+                              : () {},
                           text: 'Sign-up'),
                       const SizedBox(height: 10),
                     ],
@@ -169,11 +177,19 @@ class _AuthScreenState extends State<AuthScreen> {
                       ),
                       const SizedBox(height: 10),
                       CustomButton(
-                          ontap: () {
-                            if (_signInFormKey.currentState!.validate()) {
-                              signInUser();
-                            }
-                          },
+                          ontap: !_signUpValidated
+                              ? () async {
+                                  if (_signInFormKey.currentState!.validate()) {
+                                    setState(() {
+                                      _signUpValidated = true;
+                                    });
+                                    await signInUser();
+                                    setState(() {
+                                      _signUpValidated = true;
+                                    });
+                                  }
+                                }
+                              : () {},
                           text: 'Sign-in'),
                       const SizedBox(height: 10),
                     ],

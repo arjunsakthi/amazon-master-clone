@@ -24,18 +24,18 @@ class _AddProductScreenState extends State<AddProductScreen> {
   final TextEditingController priceController = TextEditingController();
   final TextEditingController quantityController = TextEditingController();
   final AdminServices adminServices = AdminServices();
-
+  bool _isSelling = false;
   String category = 'Mobiles';
   List<File> images = [];
   final _addProductFormKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
-    super.dispose();
     productNameController.dispose();
     descriptionController.dispose();
     priceController.dispose();
     quantityController.dispose();
+    super.dispose();
   }
 
   List<String> productCategories = [
@@ -46,9 +46,12 @@ class _AddProductScreenState extends State<AddProductScreen> {
     'Fashion'
   ];
 
-  void sellProduct() {
+  void sellProduct() async {
+    setState(() {
+      _isSelling = true;
+    });
     if (_addProductFormKey.currentState!.validate() && images.isNotEmpty) {
-      adminServices.sellProduct(
+      await adminServices.sellProduct(
         context: context,
         name: productNameController.text,
         description: descriptionController.text,
@@ -58,6 +61,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
         images: images,
       );
     }
+    setState(() {
+      _isSelling = false;
+    });
   }
 
   void selectImages() async {
@@ -189,7 +195,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 const SizedBox(height: 10),
                 CustomButton(
                   text: 'Sell',
-                  ontap: sellProduct,
+                  ontap: !_isSelling ? sellProduct : () {},
                 ),
               ],
             ),

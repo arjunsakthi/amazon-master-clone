@@ -1,0 +1,621 @@
+@startuml
+set namespaceSeparator ::
+
+class "amazon_clone::constants::global_variables.dart::GlobalVariables" {
+  {static} +LinearGradient appBarGradient
+  {static} +Color secondaryColor
+  {static} +Color backgroundColor
+  {static} +Color greyBackgroundCOlor
+  {static} +Color selectedNavBarColor
+  {static} +Color unselectedNavBarColor
+  {static} +List<String> carouselImages
+  {static} +List<Map<String, String>> categoryImages
+}
+
+"amazon_clone::constants::global_variables.dart::GlobalVariables" o-- "flutter::src::painting::gradient.dart::LinearGradient"
+"amazon_clone::constants::global_variables.dart::GlobalVariables" o-- "dart::ui::Color"
+
+class "amazon_clone::features::accounts::screens::account_screen.dart::AccountScreen" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "amazon_clone::features::accounts::screens::account_screen.dart::AccountScreen"
+
+class "amazon_clone::features::accounts::services::account_services.dart::AccountServices" {
+  +dynamic fetchMyOrders()
+  +dynamic logout()
+}
+
+class "amazon_clone::features::accounts::widgets::account_button.dart::AccountButton" {
+  +String text
+  +void Function() onTap
+  +Widget build()
+}
+
+"amazon_clone::features::accounts::widgets::account_button.dart::AccountButton" o-- "dart::ui::void Function()"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "amazon_clone::features::accounts::widgets::account_button.dart::AccountButton"
+
+class "amazon_clone::features::accounts::widgets::main_body.dart::MainBody" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "amazon_clone::features::accounts::widgets::main_body.dart::MainBody"
+
+class "amazon_clone::features::accounts::widgets::orders.dart::Orders" {
+  +State<Orders> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "amazon_clone::features::accounts::widgets::orders.dart::Orders"
+
+class "amazon_clone::features::accounts::widgets::orders.dart::_OrdersState" {
+  +List<Order>? orders
+  +AccountServices accountServices
+  +void initState()
+  +void fetchOrders()
+  +Widget build()
+}
+
+"amazon_clone::features::accounts::widgets::orders.dart::_OrdersState" o-- "amazon_clone::features::accounts::services::account_services.dart::AccountServices"      
+"flutter::src::widgets::framework.dart::State" <|-- "amazon_clone::features::accounts::widgets::orders.dart::_OrdersState"
+
+class "amazon_clone::features::accounts::widgets::single_product.dart::SingleProduct" {
+  +String image
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "amazon_clone::features::accounts::widgets::single_product.dart::SingleProduct"
+
+class "amazon_clone::features::accounts::widgets::top_buttons.dart::TopButtons" {
+  +State<TopButtons> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "amazon_clone::features::accounts::widgets::top_buttons.dart::TopButtons"
+
+class "amazon_clone::features::accounts::widgets::top_buttons.dart::_TopButtonsState" {
+  -bool _isLoggingout
+  +AccountServices accountServices
+  +Widget build()
+}
+
+"amazon_clone::features::accounts::widgets::top_buttons.dart::_TopButtonsState" o-- "amazon_clone::features::accounts::services::account_services.dart::AccountServices"
+"flutter::src::widgets::framework.dart::State" <|-- "amazon_clone::features::accounts::widgets::top_buttons.dart::_TopButtonsState"
+
+class "amazon_clone::features::address::screens::address_screen.dart::AddressScreen" {
+  {static} +String routeName
+  +String totalAmount
+  +State<AddressScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "amazon_clone::features::address::screens::address_screen.dart::AddressScreen"
+
+class "amazon_clone::features::address::screens::address_screen.dart::_AddressScreenState" {
+  +TextEditingController flatBuildingController
+  +TextEditingController areaController
+  +TextEditingController pincodeController
+  +TextEditingController cityController
+  -GlobalKey<FormState> _addressFormKey
+  +String addressToBeUsed
+  +List<PaymentItem> paymentItems
+  +AddressServices addressServices
+  +void initState()
+  +void dispose()
+  +void onApplePayResult()
+  +void onGooglePayResult()
+  +void payPressed()
+  +Widget build()
+}
+
+"amazon_clone::features::address::screens::address_screen.dart::_AddressScreenState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"amazon_clone::features::address::screens::address_screen.dart::_AddressScreenState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"amazon_clone::features::address::screens::address_screen.dart::_AddressScreenState" o-- "amazon_clone::features::address::services::address_services.dart::AddressServices"
+"flutter::src::widgets::framework.dart::State" <|-- "amazon_clone::features::address::screens::address_screen.dart::_AddressScreenState"
+
+class "amazon_clone::features::address::services::address_services.dart::AddressServices" {
+  +void saveUserAddress()
+  +void placeOrder()
+  +void deleteProduct()
+}
+
+class "amazon_clone::features::admin::models::sales.dart::Sales" {
+  +String label
+  +int earnings
+}
+
+class "amazon_clone::features::admin::screens::add_product_screen.dart::AddProductScreen" {
+  {static} +String routeName
+  +State<AddProductScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "amazon_clone::features::admin::screens::add_product_screen.dart::AddProductScreen"
+
+class "amazon_clone::features::admin::screens::add_product_screen.dart::_AddProductScreenState" {
+  +TextEditingController productNameController
+  +TextEditingController descriptionController
+  +TextEditingController priceController
+  +TextEditingController quantityController
+  +AdminServices adminServices
+  -bool _isSelling
+  +String category
+  +List<File> images
+  -GlobalKey<FormState> _addProductFormKey
+  +List<String> productCategories
+  +void dispose()
+  +void sellProduct()
+  +void selectImages()
+  +Widget build()
+}
+
+"amazon_clone::features::admin::screens::add_product_screen.dart::_AddProductScreenState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"     
+"amazon_clone::features::admin::screens::add_product_screen.dart::_AddProductScreenState" o-- "amazon_clone::features::admin::services::admin_services.dart::AdminServices"
+"amazon_clone::features::admin::screens::add_product_screen.dart::_AddProductScreenState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"flutter::src::widgets::framework.dart::State" <|-- "amazon_clone::features::admin::screens::add_product_screen.dart::_AddProductScreenState"
+
+class "amazon_clone::features::admin::screens::admin_screen.dart::AdminScreen" {
+  +State<AdminScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "amazon_clone::features::admin::screens::admin_screen.dart::AdminScreen"
+
+class "amazon_clone::features::admin::screens::admin_screen.dart::_AdminScreenState" {
+  -bool _isLoggingOut
+  -int _page
+  +double bottomBarWidth
+  +double bottomBarBorderWidth
+  +List<Widget> pages
+  +void updatePage()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "amazon_clone::features::admin::screens::admin_screen.dart::_AdminScreenState"
+
+class "amazon_clone::features::admin::screens::analtyics_screen.dart::AnalyticsScreen" {
+  +State<AnalyticsScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "amazon_clone::features::admin::screens::analtyics_screen.dart::AnalyticsScreen"
+
+class "amazon_clone::features::admin::screens::analtyics_screen.dart::_AnalyticsScreenState" {
+  +AdminServices adminServices
+  +int? totalSales
+  +List<Sales>? earnings
+  +void initState()
+  +dynamic getEarnings()
+  +Widget build()
+}
+
+"amazon_clone::features::admin::screens::analtyics_screen.dart::_AnalyticsScreenState" o-- "amazon_clone::features::admin::services::admin_services.dart::AdminServices"
+"flutter::src::widgets::framework.dart::State" <|-- "amazon_clone::features::admin::screens::analtyics_screen.dart::_AnalyticsScreenState"
+
+class "amazon_clone::features::admin::screens::orders_screen.dart::OrdersScreen" {
+  +State<OrdersScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "amazon_clone::features::admin::screens::orders_screen.dart::OrdersScreen"
+
+class "amazon_clone::features::admin::screens::orders_screen.dart::_OrdersScreenState" {
+  +List<Order>? orders
+  +AdminServices adminServices
+  +void initState()
+  +void fetchOrders()
+  +Widget build()
+}
+
+"amazon_clone::features::admin::screens::orders_screen.dart::_OrdersScreenState" o-- "amazon_clone::features::admin::services::admin_services.dart::AdminServices"   
+"flutter::src::widgets::framework.dart::State" <|-- "amazon_clone::features::admin::screens::orders_screen.dart::_OrdersScreenState"
+
+class "amazon_clone::features::admin::screens::posts_screen.dart::PostsScreen" {
+  +State<PostsScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "amazon_clone::features::admin::screens::posts_screen.dart::PostsScreen"
+
+class "amazon_clone::features::admin::screens::posts_screen.dart::_PostsScreenState" {
+  +AdminServices adminServices
+  +List<Product>? products
+  -bool _delete
+  +void initState()
+  +void fetchAllProducts()
+  +dynamic deleteProduct()
+  +void navigateToAddProduct()
+  +Widget build()
+}
+
+"amazon_clone::features::admin::screens::posts_screen.dart::_PostsScreenState" o-- "amazon_clone::features::admin::services::admin_services.dart::AdminServices"     
+"flutter::src::widgets::framework.dart::State" <|-- "amazon_clone::features::admin::screens::posts_screen.dart::_PostsScreenState"
+
+class "amazon_clone::features::admin::services::admin_services.dart::AdminServices" {
+  +dynamic sellProduct()
+  +dynamic fetchAllProducts()
+  +dynamic deleteProduct()
+  +dynamic fetchAllOrders()
+  +dynamic changeOrderStatus()
+  +dynamic getEarnings()
+}
+
+class "amazon_clone::features::admin::widgets::category_products_chart.dart::CategoryProductsChart" {
+  +List<Sales> earnings
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "amazon_clone::features::admin::widgets::category_products_chart.dart::CategoryProductsChart"
+
+class "amazon_clone::features::auth::screens::auth_screen.dart::AuthScreen" {
+  {static} +String routeName
+  +State<AuthScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "amazon_clone::features::auth::screens::auth_screen.dart::AuthScreen"
+
+class "amazon_clone::features::auth::screens::auth_screen.dart::_AuthScreenState" {
+  -Auth _auth
+  +AuthService authService
+  -GlobalKey<FormState> _signUpFormKey
+  -GlobalKey<FormState> _signInFormKey
+  -TextEditingController _emailController
+  -TextEditingController _passwordController
+  -TextEditingController _nameController
+  -bool _signInValidated
+  -bool _signUpValidated
+  +void dispose()
+  +dynamic signupUser()
+  +dynamic signInUser()
+  +Widget build()
+}
+
+"amazon_clone::features::auth::screens::auth_screen.dart::_AuthScreenState" o-- "amazon_clone::features::auth::screens::auth_screen.dart::Auth"
+"amazon_clone::features::auth::screens::auth_screen.dart::_AuthScreenState" o-- "amazon_clone::features::auth::services::auth_service.dart::AuthService"
+"amazon_clone::features::auth::screens::auth_screen.dart::_AuthScreenState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"amazon_clone::features::auth::screens::auth_screen.dart::_AuthScreenState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "amazon_clone::features::auth::screens::auth_screen.dart::_AuthScreenState"
+
+class "amazon_clone::features::auth::screens::auth_screen.dart::Auth" {
+  +int index
+  {static} +List<Auth> values
+  {static} +Auth signup
+  {static} +Auth signin
+}
+
+"amazon_clone::features::auth::screens::auth_screen.dart::Auth" o-- "amazon_clone::features::auth::screens::auth_screen.dart::Auth"
+"dart::core::Enum" <|-- "amazon_clone::features::auth::screens::auth_screen.dart::Auth"
+
+class "amazon_clone::features::auth::services::auth_service.dart::AuthService" {
+  +dynamic signUpUser()
+  +dynamic signInUser()
+  +void getUserData()
+}
+
+class "amazon_clone::features::cart::screens::cart_screen.dart::CartScreen" {
+  +State<CartScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "amazon_clone::features::cart::screens::cart_screen.dart::CartScreen"
+
+class "amazon_clone::features::cart::screens::cart_screen.dart::_CartScreenState" {
+  +void navigateToSearchScreen()
+  +void navigateToAddress()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "amazon_clone::features::cart::screens::cart_screen.dart::_CartScreenState"
+
+class "amazon_clone::features::cart::services::cart_services.dart::CartServices" {
+  +dynamic removeFromCart()
+}
+
+class "amazon_clone::features::cart::widgets::cart_product.dart::CartProduct" {
+  +int index
+  +State<CartProduct> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "amazon_clone::features::cart::widgets::cart_product.dart::CartProduct"
+
+class "amazon_clone::features::cart::widgets::cart_product.dart::_CartProductState" {
+  +ProductDetailsServices productDetailsServices
+  +CartServices cartServices
+  -bool _increase
+  -bool _decrease
+  +dynamic increaseQuantity()
+  +dynamic decreaseQuantity()
+  +Widget build()
+}
+
+"amazon_clone::features::cart::widgets::cart_product.dart::_CartProductState" o-- "amazon_clone::features::product_details::services::product_details_services.dart::ProductDetailsServices"
+"amazon_clone::features::cart::widgets::cart_product.dart::_CartProductState" o-- "amazon_clone::features::cart::services::cart_services.dart::CartServices"
+"flutter::src::widgets::framework.dart::State" <|-- "amazon_clone::features::cart::widgets::cart_product.dart::_CartProductState"
+
+class "amazon_clone::features::cart::widgets::cart_subtotal.dart::CartSubtotal" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "amazon_clone::features::cart::widgets::cart_subtotal.dart::CartSubtotal"
+
+class "amazon_clone::features::home::screens::category_deals_screen.dart::CategoryDealsScreen" {
+  {static} +String routeName
+  +String category
+  +State<CategoryDealsScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "amazon_clone::features::home::screens::category_deals_screen.dart::CategoryDealsScreen"
+
+class "amazon_clone::features::home::screens::category_deals_screen.dart::_CategoryDealsScreenState" {
+  +List<Product>? productList
+  +HomeServices homeServices
+  +void initState()
+  +dynamic fetchCategoryProducts()
+  +Widget build()
+}
+
+"amazon_clone::features::home::screens::category_deals_screen.dart::_CategoryDealsScreenState" o-- "amazon_clone::features::home::services::home_services.dart::HomeServices"
+"flutter::src::widgets::framework.dart::State" <|-- "amazon_clone::features::home::screens::category_deals_screen.dart::_CategoryDealsScreenState"
+
+class "amazon_clone::features::home::screens::home_screen.dart::HomeScreen" {
+  {static} +String routeName
+  +State<HomeScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "amazon_clone::features::home::screens::home_screen.dart::HomeScreen"
+
+class "amazon_clone::features::home::screens::home_screen.dart::_HomeScreenState" {
+  +HomeServices homeServices
+  +void navigateToSearch()
+  +Widget build()
+}
+
+"amazon_clone::features::home::screens::home_screen.dart::_HomeScreenState" o-- "amazon_clone::features::home::services::home_services.dart::HomeServices"
+"flutter::src::widgets::framework.dart::State" <|-- "amazon_clone::features::home::screens::home_screen.dart::_HomeScreenState"
+
+class "amazon_clone::features::home::services::home_services.dart::HomeServices" {
+  +dynamic fetchCategoryProducts()
+  +dynamic fetchDealOfDay()
+}
+
+class "amazon_clone::features::home::widgets::address_box.dart::AddressBox" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "amazon_clone::features::home::widgets::address_box.dart::AddressBox"
+
+class "amazon_clone::features::home::widgets::carousel.dart::CarouselImage" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "amazon_clone::features::home::widgets::carousel.dart::CarouselImage"
+
+class "amazon_clone::features::home::widgets::deal_of_day.dart::DealOfDay" {
+  +State<DealOfDay> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "amazon_clone::features::home::widgets::deal_of_day.dart::DealOfDay"
+
+class "amazon_clone::features::home::widgets::deal_of_day.dart::_DealOfDayState" {
+  +Product? product
+  +HomeServices homeServices
+  +void initState()
+  +void fetchDealofDay()
+  +void navigateToDetailScreen()
+  +Widget build()
+}
+
+"amazon_clone::features::home::widgets::deal_of_day.dart::_DealOfDayState" o-- "amazon_clone::model::product.dart::Product"
+"amazon_clone::features::home::widgets::deal_of_day.dart::_DealOfDayState" o-- "amazon_clone::features::home::services::home_services.dart::HomeServices"
+"flutter::src::widgets::framework.dart::State" <|-- "amazon_clone::features::home::widgets::deal_of_day.dart::_DealOfDayState"
+
+class "amazon_clone::features::home::widgets::top_categories.dart::TopCategories" {
+  +void NavigateToCategoryPage()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "amazon_clone::features::home::widgets::top_categories.dart::TopCategories"
+
+class "amazon_clone::features::order_details::screens::order_details.dart::OrderDetailScreen" {
+  {static} +String routeName
+  +Order order
+  +State<OrderDetailScreen> createState()
+}
+
+"amazon_clone::features::order_details::screens::order_details.dart::OrderDetailScreen" o-- "amazon_clone::model::order.dart::Order"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "amazon_clone::features::order_details::screens::order_details.dart::OrderDetailScreen"
+
+class "amazon_clone::features::order_details::screens::order_details.dart::_OrderDetailScreenState" {
+  +int currentStep
+  +AdminServices adminServices
+  -bool _changeOrder
+  +void navigateToSearchScreen()
+  +void initState()
+  +dynamic changeOrderStatus()
+  +Widget build()
+}
+
+"amazon_clone::features::order_details::screens::order_details.dart::_OrderDetailScreenState" o-- "amazon_clone::features::admin::services::admin_services.dart::AdminServices"
+"flutter::src::widgets::framework.dart::State" <|-- "amazon_clone::features::order_details::screens::order_details.dart::_OrderDetailScreenState"
+
+class "amazon_clone::features::product_details::screens::product_details_screen.dart::ProductDetailScreen" {
+  {static} +String routeName
+  +Product product
+  +State<ProductDetailScreen> createState()
+}
+
+"amazon_clone::features::product_details::screens::product_details_screen.dart::ProductDetailScreen" o-- "amazon_clone::model::product.dart::Product"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "amazon_clone::features::product_details::screens::product_details_screen.dart::ProductDetailScreen"    
+
+class "amazon_clone::features::product_details::screens::product_details_screen.dart::_ProductDetailScreenState" {
+  +ProductDetailsServices productDetailsServices
+  +double avgRating
+  +double myRating
+  -bool _addToCart
+  +void initState()
+  +void navigateToSearchScreen()
+  +dynamic addToCart()
+  +Widget build()
+}
+
+"amazon_clone::features::product_details::screens::product_details_screen.dart::_ProductDetailScreenState" o-- "amazon_clone::features::product_details::services::product_details_services.dart::ProductDetailsServices"
+"flutter::src::widgets::framework.dart::State" <|-- "amazon_clone::features::product_details::screens::product_details_screen.dart::_ProductDetailScreenState"       
+
+class "amazon_clone::features::product_details::services::product_details_services.dart::ProductDetailsServices" {
+  +dynamic addToCart()
+  +void rateProduct()
+}
+
+class "amazon_clone::features::search::screens::search_screen.dart::SearchScreen" {
+  {static} +String routeName
+  +String searchQuery
+  +State<SearchScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "amazon_clone::features::search::screens::search_screen.dart::SearchScreen"
+
+class "amazon_clone::features::search::screens::search_screen.dart::_SearchScreenState" {
+  +List<Product>? products
+  +SearchServices searchServices
+  +void initState()
+  +dynamic fetchSearchedProduct()
+  +void navigateToSearchScreen()
+  +Widget build()
+}
+
+"amazon_clone::features::search::screens::search_screen.dart::_SearchScreenState" o-- "amazon_clone::features::search::services::search_services.dart::SearchServices"
+"flutter::src::widgets::framework.dart::State" <|-- "amazon_clone::features::search::screens::search_screen.dart::_SearchScreenState"
+
+class "amazon_clone::features::search::services::search_services.dart::SearchServices" {
+  +dynamic fetchSearchedProduct()
+}
+
+class "amazon_clone::features::search::widget::searched_product.dart::SearchedProduct" {
+  +Product product
+  +Widget build()
+}
+
+"amazon_clone::features::search::widget::searched_product.dart::SearchedProduct" o-- "amazon_clone::model::product.dart::Product"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "amazon_clone::features::search::widget::searched_product.dart::SearchedProduct"
+
+class "amazon_clone::main.dart::MyApp" {
+  {static} +String routeName
+  +State<MyApp> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "amazon_clone::main.dart::MyApp"
+
+class "amazon_clone::main.dart::_MyAppState" {
+  +User? user
+  +AuthService authService
+  +void initState()
+  +Widget build()
+}
+
+"amazon_clone::main.dart::_MyAppState" o-- "amazon_clone::model::user.dart::User"
+"amazon_clone::main.dart::_MyAppState" o-- "amazon_clone::features::auth::services::auth_service.dart::AuthService"
+"flutter::src::widgets::framework.dart::State" <|-- "amazon_clone::main.dart::_MyAppState"
+
+class "amazon_clone::model::order.dart::Order" {
+  +String id
+  +List<Product> products
+  +List<int> quantity
+  +String address
+  +String userId
+  +int orderedAt
+  +int status
+  +double totalPrice
+  +Map<String, dynamic> toMap()
+  +String toJson()
+}
+
+class "amazon_clone::model::product.dart::Product" {
+  +String name
+  +String description
+  +double quantity
+  +List<String> images
+  +String category
+  +double price
+  +String? id
+  +List<Rating>? rating
+  +Map<String, dynamic> toMap()
+  +String toJson()
+}
+
+class "amazon_clone::model::rating.dart::Rating" {
+  +String userId
+  +double rating
+  +Map<String, dynamic> toMap()
+  +String toJson()
+}
+
+class "amazon_clone::model::user.dart::User" {
+  +String id
+  +String name
+  +String email
+  +String password
+  +String address
+  +String type
+  +String token
+  +List<dynamic> cart
+  +Map<String, dynamic> toJson()
+  +User copyWith()
+}
+
+class "amazon_clone::provider::user_provider.dart::UserProvider" {
+  -User _user
+  +User user
+  +void setUser()
+  +void setUserFromModel()
+}
+
+"amazon_clone::provider::user_provider.dart::UserProvider" o-- "amazon_clone::model::user.dart::User"
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "amazon_clone::provider::user_provider.dart::UserProvider"
+
+class "amazon_clone::utility::widgets::bottom_bar.dart::BottomBar" {
+  {static} +String routeName
+  +State<BottomBar> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "amazon_clone::utility::widgets::bottom_bar.dart::BottomBar"
+
+class "amazon_clone::utility::widgets::bottom_bar.dart::_BottomBarState" {
+  -int _page
+  +double bottomBarItemWidth
+  +double bottomBarBorderWidth
+  -PageController _pageController
+  +List<Widget> pages
+  +void updatePage()
+  +Widget build()
+}
+
+"amazon_clone::utility::widgets::bottom_bar.dart::_BottomBarState" o-- "flutter::src::widgets::page_view.dart::PageController"
+"flutter::src::widgets::framework.dart::State" <|-- "amazon_clone::utility::widgets::bottom_bar.dart::_BottomBarState"
+
+class "amazon_clone::utility::widgets::custom_button.dart::CustomButton" {
+  +String text
+  +void Function() ontap
+  +Color? color
+  +Widget build()
+}
+
+"amazon_clone::utility::widgets::custom_button.dart::CustomButton" o-- "dart::ui::void Function()"
+"amazon_clone::utility::widgets::custom_button.dart::CustomButton" o-- "dart::ui::Color"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "amazon_clone::utility::widgets::custom_button.dart::CustomButton"
+
+class "amazon_clone::utility::widgets::custom_textField.dart::CustomTextfield" {
+  +TextEditingController controller
+  +String hintText
+  +int maxLines
+  +Widget build()
+}
+
+"amazon_clone::utility::widgets::custom_textField.dart::CustomTextfield" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "amazon_clone::utility::widgets::custom_textField.dart::CustomTextfield"
+
+class "amazon_clone::utility::widgets::loader.dart::Loader" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "amazon_clone::utility::widgets::loader.dart::Loader"
+
+class "amazon_clone::utility::widgets::stars.dart::Stars" {
+  +double rating
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "amazon_clone::utility::widgets::stars.dart::Stars"
+
+
+@enduml

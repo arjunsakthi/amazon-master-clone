@@ -31,6 +31,8 @@ migrate_working_dir/
 .pub/
 /build/
 *.env
+/android/keystore.properties
+/android/app/release-key.jks
 
 # Symbolication related
 app.*.symbols

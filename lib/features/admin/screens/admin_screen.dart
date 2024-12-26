@@ -13,6 +13,7 @@ class AdminScreen extends StatefulWidget {
 }
 
 class _AdminScreenState extends State<AdminScreen> {
+  bool _isLoggingOut = false;
   int _page = 0;
   double bottomBarWidth = 42;
   double bottomBarBorderWidth = 5;
@@ -63,7 +64,17 @@ class _AdminScreenState extends State<AdminScreen> {
                 ),
                 const SizedBox(width: 5),
                 GestureDetector(
-                  onTap: () => accountServices.logout(context),
+                  onTap: !_isLoggingOut
+                      ? () async{
+                          setState(() {
+                            _isLoggingOut = true;
+                          });
+                          await accountServices.logout(context);
+                          setState(() {
+                            _isLoggingOut = false;
+                          });
+                        }
+                      : null,
                   child: const Icon(
                     Icons.logout,
                     color: Colors.brown,

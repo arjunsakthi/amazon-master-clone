@@ -10,6 +10,7 @@ class TopButtons extends StatefulWidget {
 }
 
 class _TopButtonsState extends State<TopButtons> {
+  bool _isLoggingout = false;
   final AccountServices accountServices = AccountServices();
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,17 @@ class _TopButtonsState extends State<TopButtons> {
           children: [
             AccountButton(
               text: 'Log out',
-              onTap: () => accountServices.logout(context),
+              onTap: !_isLoggingout
+                  ? () async{
+                      setState(() {
+                        _isLoggingout = true;
+                      });
+                      await accountServices.logout(context);
+                      setState(() {
+                        _isLoggingout = false;
+                      });
+                    }
+                  : () {},
             ),
             AccountButton(
               text: 'Your Wish List',

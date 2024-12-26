@@ -20,19 +20,33 @@ class _CartProductState extends State<CartProduct> {
   final ProductDetailsServices productDetailsServices =
       ProductDetailsServices();
   final CartServices cartServices = CartServices();
+  bool _increase = false;
+  bool _decrease = false;
 
-  void increaseQuantity(Product product) {
-    productDetailsServices.addToCart(
+  Future<void> increaseQuantity(Product product) async {
+    setState(() {
+      _increase = true;
+    });
+    await productDetailsServices.addToCart(
       context: context,
       product: product,
     );
+    setState(() {
+      _increase = false;
+    });
   }
 
-  void decreaseQuantity(Product product) {
-    cartServices.removeFromCart(
+  Future<void> decreaseQuantity(Product product) async {
+    setState(() {
+      _decrease = true;
+    });
+    await cartServices.removeFromCart(
       context: context,
       product: product,
     );
+    setState(() {
+      _decrease = false;
+    });
   }
 
   @override
@@ -119,7 +133,8 @@ class _CartProductState extends State<CartProduct> {
                 child: Row(
                   children: [
                     InkWell(
-                      onTap: () => decreaseQuantity(product),
+                      onTap:
+                          !_decrease ? () async =>await decreaseQuantity(product) : () {},
                       child: Container(
                         width: 35,
                         height: 32,
@@ -146,7 +161,8 @@ class _CartProductState extends State<CartProduct> {
                       ),
                     ),
                     InkWell(
-                      onTap: () => increaseQuantity(product),
+                      onTap:
+                          !_increase ? () async=>await increaseQuantity(product) : () {},
                       child: Container(
                         width: 35,
                         height: 32,

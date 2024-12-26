@@ -26,7 +26,10 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
     var earningData = await adminServices.getEarnings(context);
     totalSales = earningData['totalEarnings'];
     earnings = earningData['sales'];
-    setState(() {});
+    if (mounted) {
+      // Ensure the widget is still mounted before updating the state
+      setState(() {});
+    }
   }
 
   @override

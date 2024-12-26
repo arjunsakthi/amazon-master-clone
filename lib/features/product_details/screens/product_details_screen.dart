@@ -27,6 +27,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       ProductDetailsServices();
   double avgRating = 0;
   double myRating = 0;
+  bool _addToCart = false;
 
   @override
   void initState() {
@@ -49,11 +50,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
   }
 
-  void addToCart() {
-    productDetailsServices.addToCart(
+  Future<void> addToCart() async {
+    setState(() {
+      _addToCart = true;
+    });
+    await productDetailsServices.addToCart(
       context: context,
       product: widget.product,
     );
+    setState(() {
+      _addToCart = false;
+    });
   }
 
   @override
@@ -230,7 +237,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             padding: const EdgeInsets.all(10),
             child: CustomButton(
               text: 'Add to Cart',
-              ontap: addToCart,
+              ontap: !_addToCart ? addToCart : () {},
               color: const Color.fromRGBO(254, 216, 19, 1),
             ),
           ),

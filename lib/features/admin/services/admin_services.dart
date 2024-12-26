@@ -15,7 +15,7 @@ import '../../../constants/global_variables.dart';
 import '../../../constants/utils.dart';
 
 class AdminServices {
-  void sellProduct({
+  Future<void> sellProduct({
     required BuildContext context,
     required String name,
     required String description,
@@ -103,7 +103,7 @@ class AdminServices {
     return productList;
   }
 
-  void deleteProduct({
+  Future<void> deleteProduct({
     required BuildContext context,
     required Product product,
     required VoidCallback onSuccess,
@@ -165,7 +165,7 @@ class AdminServices {
     return orderList;
   }
 
-  void changeOrderStatus({
+  Future<void> changeOrderStatus({
     required BuildContext context,
     required int status,
     required Order order,

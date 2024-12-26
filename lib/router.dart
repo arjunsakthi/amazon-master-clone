@@ -6,6 +6,7 @@ import 'package:amazon_clone/features/home/screens/home_screen.dart';
 import 'package:amazon_clone/features/order_details/screens/order_details.dart';
 import 'package:amazon_clone/features/product_details/screens/product_details_screen.dart';
 import 'package:amazon_clone/features/search/screens/search_screen.dart';
+import 'package:amazon_clone/main.dart';
 import 'package:amazon_clone/model/order.dart';
 import 'package:amazon_clone/model/product.dart';
 
@@ -14,6 +15,12 @@ import 'package:flutter/material.dart';
 
 Route<dynamic> generateRoute(RouteSettings routerSeting) {
   switch (routerSeting.name) {
+    case MyApp.routeName:
+      return MaterialPageRoute(
+        builder: (_) {
+          return const MyApp();
+        },
+      );
     case AuthScreen.routeName:
       return MaterialPageRoute(
         builder: (_) {
@@ -57,7 +64,7 @@ Route<dynamic> generateRoute(RouteSettings routerSeting) {
           searchQuery: searchQuery,
         ),
       );
-       case AddressScreen.routeName:
+    case AddressScreen.routeName:
       var totalAmount = routerSeting.arguments as String;
       return MaterialPageRoute(
         settings: routerSeting,
@@ -65,7 +72,7 @@ Route<dynamic> generateRoute(RouteSettings routerSeting) {
           totalAmount: totalAmount,
         ),
       );
-      case OrderDetailScreen.routeName:
+    case OrderDetailScreen.routeName:
       var order = routerSeting.arguments as Order;
       return MaterialPageRoute(
         settings: routerSeting,

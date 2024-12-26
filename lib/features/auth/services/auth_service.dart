@@ -4,6 +4,7 @@ import 'package:amazon_clone/constants/error_handling.dart';
 import 'package:amazon_clone/constants/global_variables.dart';
 import 'package:amazon_clone/constants/utils.dart';
 import 'package:amazon_clone/features/home/screens/home_screen.dart';
+import 'package:amazon_clone/main.dart';
 import 'package:amazon_clone/model/user.dart';
 import 'package:amazon_clone/provider/user_provider.dart';
 import 'package:amazon_clone/utility/widgets/bottom_bar.dart';
@@ -14,7 +15,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
   // sign up user
-  void signUpUser({
+  Future<void> signUpUser({
     required String email,
     required String password,
     required BuildContext context,
@@ -50,7 +51,7 @@ class AuthService {
   }
 
   //signin
-  void signInUser({
+  Future<void> signInUser({
     required String email,
     required String password,
     required BuildContext context,
@@ -78,7 +79,7 @@ class AuthService {
             );
             Navigator.pushNamedAndRemoveUntil(
               context,
-              BottomBar.routeName,
+              MyApp.routeName,
               (route) => false,
             );
           });
@@ -101,6 +102,7 @@ class AuthService {
           'X-auth-token': token,
         });
         var response = jsonDecode(tokenRes.body);
+        print(response);
         if (response) {
           // get user Data
           http.Response userRes =

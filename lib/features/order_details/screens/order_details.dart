@@ -24,6 +24,7 @@ class OrderDetailScreen extends StatefulWidget {
 class _OrderDetailScreenState extends State<OrderDetailScreen> {
   int currentStep = 0;
   final AdminServices adminServices = AdminServices();
+  bool _changeOrder = false;
 
   void navigateToSearchScreen(String query) {
     Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
@@ -36,8 +37,11 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
   }
 
   // !!! ONLY FOR ADMIN!!!
-  void changeOrderStatus(int status) {
-    adminServices.changeOrderStatus(
+  Future<void> changeOrderStatus(int status) async {
+    setState(() {
+      _changeOrder = true;
+    });
+    await adminServices.changeOrderStatus(
       context: context,
       status: status + 1,
       order: widget.order,
@@ -47,6 +51,9 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
         });
       },
     );
+    setState(() {
+      _changeOrder = false;
+    });
   }
 
   @override
@@ -229,7 +236,10 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                     if (user.type == 'admin') {
                       return CustomButton(
                         text: 'Done',
-                        ontap: () => changeOrderStatus(details.currentStep),
+                        ontap: !_changeOrder
+                            ? () async =>
+                                await changeOrderStatus(details.currentStep)
+                            : () {},
                       );
                     }
                     return const SizedBox();

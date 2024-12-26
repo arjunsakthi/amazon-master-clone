@@ -28,7 +28,10 @@ class _OrdersState extends State<Orders> {
   void fetchOrders() async {
     orders = await accountServices.fetchMyOrders(context: context);
     print("object");
-    setState(() {});
+    if (mounted) {
+      // Ensure the widget is still mounted before updating the state
+      setState(() {});
+    }
   }
 
   @override
