@@ -109,12 +109,12 @@ Before you can run this project locally, you need to have the following installe
 
 Here are some images from the app:
 
-![App Screenshot 1](git_images/screenshot1.png)  
-![App Screenshot 1](git_images/screenshot2.png)  
-![App Screenshot 1](git_images/screenshot3.png)  
-![App Screenshot 1](git_images/screenshot4.png)  
-![App Screenshot 1](git_images/screenshot5.png)  
-![App Screenshot 1](git_images/screenshot6.png)  
+![App Screenshot 1](git_images/screenshot1.jpg)  
+![App Screenshot 1](git_images/screenshot2.jpg)  
+![App Screenshot 1](git_images/screenshot3.jpg)  
+![App Screenshot 1](git_images/screenshot4.jpg)  
+![App Screenshot 1](git_images/screenshot5.jpg)  
+![App Screenshot 1](git_images/screenshot6.jpg)  
 
 
 
