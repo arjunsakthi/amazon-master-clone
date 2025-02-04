@@ -63,8 +63,8 @@ Ensure you have the following installed:
 
 1️⃣ **Clone the repository:**  
    ```bash
-   git clone https://github.com/yourusername/amazon-clone.git
-   cd amazon-clone
+   git clone https://github.com/arjunsakthi/amazon-master-clone.git
+   cd amazon-master-clone
    ```  
 
 2️⃣ **Frontend Setup:**  
